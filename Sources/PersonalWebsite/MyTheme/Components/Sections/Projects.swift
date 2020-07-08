@@ -29,28 +29,31 @@ extension Array where Element == Node<HTML.BodyContext> {
                 .id("items"),
 
                 .forEach(projects) { section in
-                    .group(
-                        .div(
-                            .style("position: relative"),
-                            .h3(.text(section.title)),
-                            .div(.class("writings-and-projects-separator"))
-                        ),
-                        .span(.class("separator")),
-                        .forEach(section.items) { item in
+                    .if(section.items.count > 0,
+                        .group(
                             .div(
-                                .class("post-item project-item"),
-                                .a(.href(String(item.metadata["link"]!)), .rel(.noreferrer), .target(.blank), .img(.src(item.metadata["icon"]!), .alt("\(item.metadata["title"]!) icon"))),
-                                .div(
-                                    .class("text-container"),
-                                    .h3(.a(.href(item.metadata["link"]!), .rel(.noreferrer), .target(.blank), .text(item.metadata["title"]!))),
-                                    .raw(item.html)
-                                ),
-                                .a(.href(item.metadata["link"]!), .rel(.noreferrer), .target(.blank), .class("arrow"), .span(.style("display: block"), .text("→"))),
+                                .style("position: relative"),
+                                .h3(.text(section.title)),
                                 .div(.class("writings-and-projects-separator"))
-                            )
-                        },
-                        .span(.style("margin-top: -2px"), .class("separator"))
+                            ),
+                            .span(.class("separator")),
+                            .forEach(section.items) { item in
+                                .div(
+                                    .class("post-item project-item"),
+                                    .a(.href(String(item.metadata["link"]!)), .rel(.noreferrer), .target(.blank), .img(.src(item.metadata["icon"]!), .alt("\(item.metadata["title"]!) icon"))),
+                                    .div(
+                                        .class("text-container"),
+                                        .h3(.a(.href(item.metadata["link"]!), .rel(.noreferrer), .target(.blank), .text(item.metadata["title"]!))),
+                                        .raw(item.html)
+                                    ),
+                                    .a(.href(item.metadata["link"]!), .rel(.noreferrer), .target(.blank), .class("arrow"), .span(.style("display: block"), .text("→"))),
+                                    .div(.class("writings-and-projects-separator"))
+                                )
+                            },
+                            .span(.style("margin-top: -2px"), .class("separator"))
+                        )
                     )
+                    
                 }
             ),
             
