@@ -1,14 +1,3 @@
-// -------------------------------------------
-// MARK: - CONFIG
-// -------------------------------------------
-const autoStartRecording = false
-const secondsOfRecording = 24 // 0 = auto
-// PRESS "ENTER" FOR SAVING PNG
-// PRESS "S" FOR START RECORDING
-// PRESS "E" FOR END RECORDING
-// -------------------------------------------
-
-
 const fps = 30
 const canvasDimension = 1080
 
@@ -37,7 +26,6 @@ function setup() {
 	frameRate(fps)
 	noStroke()
 	colorMode(HSL)
-	// noLoop()
 }
 
 
@@ -64,32 +52,32 @@ function squareModule(x, y, squareSize, delay, index) {
 	
 	const currentTime = timeLoop(120, delay)
 	const percentageCompleted = map(currentTime, 0, 1, 0, 100).toFixed(0)
-
+	
 	switch (true) {
 		case percentageCompleted <= 20: // 0 - 20
-			for (let i = 1; i <= 3; i++) {
-				blendMode(ADD)
-					fill(255, 0.30)
-					const sizeIntro = mapWithEase(percentageCompleted, 0, 5 + (5 * i), 1, squareSize, true, false)
-					rect(x, y, sizeIntro, sizeIntro, borderRadius)
-				blendMode(BLEND)
-			}
+		for (let i = 1; i <= 3; i++) {
+			blendMode(ADD)
+			fill(255, 0.30)
+			const sizeIntro = mapWithEase(percentageCompleted, 0, 5 + (5 * i), 1, squareSize, true, false)
+			rect(x, y, sizeIntro, sizeIntro, borderRadius)
+			blendMode(BLEND)
+		}
 		break
 		
 		case percentageCompleted <= 40: // 20 - 40
-			for (let i = 1; i <= 3; i++) {
-				blendMode(ADD)
-				rectMode(CORNERS)
-					fill(255, 0.30)
-					const sizeOutro = mapWithEase(percentageCompleted, 25 - (5 * i), 40, 1, squareSize, true, true)
-					rect(x + sizeOutro, y + sizeOutro, x + squareSize , y + squareSize, borderRadius)
-				rectMode(CORNER)
-				blendMode(BLEND)
-			}
-			
-			if (index == 1 &&  percentageCompleted == 35) {
-				selectedColor = selectedColor > 4 ? 0 : selectedColor + 1
-			}
+		for (let i = 1; i <= 3; i++) {
+			blendMode(ADD)
+			rectMode(CORNERS)
+			fill(255, 0.30)
+			const sizeOutro = mapWithEase(percentageCompleted, 25 - (5 * i), 40, 1, squareSize, true, true)
+			rect(x + sizeOutro, y + sizeOutro, x + squareSize , y + squareSize, borderRadius)
+			rectMode(CORNER)
+			blendMode(BLEND)
+		}
+		
+		if (index == 1 &&  percentageCompleted == 35) {
+			selectedColor = selectedColor > 4 ? 0 : selectedColor + 1
+		}
 		break
 	}
 }
@@ -112,7 +100,7 @@ function mapWithEase(value, start1, stop1, start2, stop2, withinBounds = false, 
 	let p = 0.5
 	
 	let newval = 0
-    if (isNotIn) {
+	if (isNotIn) {
 		newval = c * pow( 2, 10 * (t/d - 1) ) + b;
 	} else {
 		newval = c * ( -pow( 2, -10 * t/d ) + 1 ) + b;

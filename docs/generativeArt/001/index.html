@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>Generative Art — Fernando Grosjean</title><meta name="twitter:title" content="Generative Art — Fernando Grosjean"/><meta name="og:title" content="Generative Art — Fernando Grosjean"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="description" content="Technology tinkerer. I’m the operator with my pocket calculator. 🤖"/><meta name="twitter:description" content="Technology tinkerer. I’m the operator with my pocket calculator. 🤖"/><meta name="og:description" content="Technology tinkerer. I’m the operator with my pocket calculator. 🤖"/><link rel="shortcut icon" href="/PersonalWebsite/favicon.png" type="image/png"/><link rel="stylesheet" href="/PersonalWebsite/style.css" type="text/css"/><script defer src="/PersonalWebsite/scripts.js"></script><link rel="stylesheet" href="/PersonalWebsite/gruvbox-dark.min.css" type="text/css"/><script src="/PersonalWebsite/highlight.pack.js"></script><script src="/PersonalWebsite/highlightjs-line-numbers.min.js"></script><script>hljs.configure({tabReplace: '  '});
+hljs.initHighlightingOnLoad();
+hljs.initLineNumbersOnLoad();</script><script defer src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script></head><body id="gen-art-detail"><header><div id="header-container"><h1><a href="/PersonalWebsite/about">Fernando Grosjean</a></h1><ul><li><a href="/PersonalWebsite/projects/">Projects</a></li><li><a id="active-section" href="/PersonalWebsite/generativeArt/">Generative Art</a></li><li><a href="/PersonalWebsite/writings/">Writings</a></li><li><a href="/PersonalWebsite/about/">About</a></li></ul></div></header><div id="main-container"><div id="gen-art-detail-container" class="content-container"><script src="../001.js"></script><div id="detail"><div id="sketch"></div><div id="code-container"><pre><code class="language-processing">
+const fps = 30
+const canvasDimension = 1080
+
+const gridSize = 10
+const gridGap = 2
+const marginSize = (canvasDimension / (gridSize + 2)) - (gridGap * 2)
+const workingArea = canvasDimension - (marginSize * 2)
+const gridModuleSize = (workingArea - (gridGap * (gridSize + 1.5))) / gridSize
+const borderRadius = 10
+
+const colors = [
+	"hsl(200, 89%  , 42.9%)",
+	"hsl(302, 38.9%, 37.8%)",
+	"hsl(2  , 67.6%, 52.7%)",
+	"hsl(24 , 87.3%, 53.5%)",
+	"hsl(37 , 91%  , 56.5%)",
+	"hsl(109, 44.3%, 45.1%)",
+]
+let selectedColor = 0
+
+
+function setup() {
+	const myCanvas = createCanvas(canvasDimension, canvasDimension)
+	myCanvas.parent('sketch')
+	
+	frameRate(fps)
+	noStroke()
+	colorMode(HSL)
+}
+
+
+function draw() {
+	background(255)
+	
+	for (let i = 1; i &lt;= gridSize; i++) {
+		for (let j = 1; j &lt;= gridSize; j++) {
+			const posX = ((gridModuleSize + gridGap) * i) - gridGap
+			const posY = ((gridModuleSize + gridGap) * j) - gridGap
+			squareModule(posX, posY, gridModuleSize, -((i * j) * 0.3), i * j)
+		}
+	}
+}
+
+
+function squareModule(x, y, squareSize, delay, index) {
+	var squareColor = colors[selectedColor]
+	squareColor = lightendedColor(squareColor, index)
+	
+	fill(squareColor)
+	rect(x, y, squareSize, squareSize, borderRadius)
+	fill(255)
+	
+	const currentTime = timeLoop(120, delay)
+	const percentageCompleted = map(currentTime, 0, 1, 0, 100).toFixed(0)
+
+	switch (true) {
+		case percentageCompleted &lt;= 20: // 0 - 20
+			for (let i = 1; i &lt;= 3; i++) {
+				blendMode(ADD)
+					fill(255, 0.30)
+					const sizeIntro = mapWithEase(percentageCompleted, 0, 5 + (5 * i), 1, squareSize, true, false)
+					rect(x, y, sizeIntro, sizeIntro, borderRadius)
+				blendMode(BLEND)
+			}
+		break
+		
+		case percentageCompleted &lt;= 40: // 20 - 40
+			for (let i = 1; i &lt;= 3; i++) {
+				blendMode(ADD)
+				rectMode(CORNERS)
+					fill(255, 0.30)
+					const sizeOutro = mapWithEase(percentageCompleted, 25 - (5 * i), 40, 1, squareSize, true, true)
+					rect(x + sizeOutro, y + sizeOutro, x + squareSize , y + squareSize, borderRadius)
+				rectMode(CORNER)
+				blendMode(BLEND)
+			}
+			
+			if (index == 1 &amp;&amp;  percentageCompleted == 35) {
+				selectedColor = selectedColor &gt; 4 ? 0 : selectedColor + 1
+			}
+		break
+	}
+}
+
+function timeLoop(frames, offset = 0) {	
+	return (frameCount + offset) % frames / frames
+}
+
+function lightendedColor(color, index) {
+	const currentLightness = lightness(color)
+	const mappedLightness = map(index, 1, gridSize * gridSize, currentLightness, 90)
+	return `hsl(${hue(color).toFixed(0)}, ${saturation(color)}%, ${mappedLightness}%)`
+}
+
+function mapWithEase(value, start1, stop1, start2, stop2, withinBounds = false, isNotIn) {
+	let b = start2
+	let c = stop2 - start2
+	let t = value - start1
+	let d = stop1 - start1
+	let p = 0.5
+	
+	let newval = 0
+    if (isNotIn) {
+		newval = c * pow( 2, 10 * (t/d - 1) ) + b;
+	} else {
+		newval = c * ( -pow( 2, -10 * t/d ) + 1 ) + b;
+	}
+	
+	
+	if (!withinBounds) { return newval }
+	if (start2 &lt; stop2) {
+		return constrain(newval, start2, stop2)
+	} else {
+		return constrain(newval, stop2, start2)
+	}
+}
+
+</code></pre></div></div><ul id="navigation"><li><a href="../002"><span class="separator"></span><h4 id="prev-nav"><span>←</span> Previous</h4><span style="height: 2px" class="separator"></span></a></li><li></li></ul><div class="grid-separator horizontal-grid-separator " style="grid-row-start: 3"></div><div class="grid-separator horizontal-grid-separator " style="grid-row-start: 4"></div><div class="grid-separator horizontal-grid-separator " style="grid-row-start: 5"></div><div class="grid-separator horizontal-grid-separator " style="grid-row-start: 6"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 1"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 2"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 3"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 4"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 5"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 6"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 7"></div><div class="grid-separator vertical-grid-separator " style="grid-column-start: 8"></div></div><footer></footer></div></body></html>
