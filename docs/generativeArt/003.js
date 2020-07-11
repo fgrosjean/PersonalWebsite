@@ -1,14 +1,3 @@
-// -------------------------------------------
-// MARK: - CONFIG
-// -------------------------------------------
-const autoStartRecording = false
-const secondsOfRecording = 3 // 0 = auto
-// PRESS "ENTER" FOR SAVING PNG
-// PRESS "S" FOR START RECORDING
-// PRESS "E" FOR END RECORDING
-// -------------------------------------------
-
-
 const fps = 30
 const canvasDimension = 1080
 
@@ -81,11 +70,11 @@ function drawHorizonalLines() {
 	const cuadrantOffsetHeight = random([height/2, -(height/2)])
 	
 	push()
-		translate(cuadrantOffsetWidth, cuadrantOffsetHeight)
-		for (let i = 0; i < height; i += lineHeight * 2) {
-			fill(0, 100)
-			rect(0, i, width, lineHeight)
-		}
+	translate(cuadrantOffsetWidth, cuadrantOffsetHeight)
+	for (let i = 0; i < height; i += lineHeight * 2) {
+		fill(0, 100)
+		rect(0, i, width, lineHeight)
+	}
 	pop()
 }
 
@@ -95,14 +84,14 @@ function drawSubdivision(index, baseWidth) {
 	const excessSpace = (width - usedSpaceOfLinesAndGaps)
 	
 	push()
-		translate(random(excessSpace, 0), 0)
-		
-		for (let i = 0; i <= width; i += baseWidth * 2) {
-			rect(
-				i, 
-				index * subdivisionHeight, 
-				baseWidth, 
-				subdivisionHeight)
+	translate(random(excessSpace, 0), 0)
+	
+	for (let i = 0; i <= width; i += baseWidth * 2) {
+		rect(
+			i, 
+			index * subdivisionHeight, 
+			baseWidth, 
+			subdivisionHeight)
 		} 
-	pop()
+		pop()
 }
