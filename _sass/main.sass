@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap')
+
+@import reset
+@import variables
+@import grid
+@import segmentedController
+
+html
+	box-sizing: border-box
+	font-family: 'Inter', sans-serif
+	
+	background: var(--main-background-color)
+	color: var(--main-txt-color)
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+	letter-spacing: -0.01em
+	scroll-behavior: smooth
+	-ms-touch-action: manipulation
+	touch-action: manipulation
+	
+*, *:before, *:after 
+	box-sizing: inherit
+	
+::selection
+	color: var(--main-background-color)
+	background: var(--main-background-color-inverted)
+	opacity: 1
+
+::-moz-selection
+	color: var(--main-background-color)
+	background: var(--main-background-color-inverted)
+	
+body 
+	-moz-osx-font-smoothing: grayscale
+	-webkit-font-smoothing: antialiased
+	-webkit-text-size-adjust: 100%
+	font-variant-ligatures: none
+	font-size: var(--font-size)
+	line-height: 1.45
+	
+a
+	text-decoration: none
+	color: var(--main-txt-color)
+	
+.wrapper
+	max-width: 1140px
+	margin: 0 auto
+	overflow: hidden
+	
+.noselect 
+	-webkit-touch-callout: none
+	-webkit-user-select: none
+	-khtml-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
+
+
+// --------------------------------------
+// HEADER
+// --------------------------------------	
+@supports (-webkit-backdrop-filter: blur(20px))
+	header 
+		-webkit-backdrop-filter: blur(20px)
+		background: var(--header-color) !important
+
+@supports (backdrop-filter: blur(20px))
+	header 
+		backdrop-filter: blur(20px)
+		background: var(--header-color) !important
+
+header
+	position: fixed
+	top: 0
+	width: 100%
+	background: var(--main-background-color)
+	padding: 0 var(--main-margin)
+	z-index: 99999
+	
+	a:hover
+		color: var(--main-accent-txt-color)
+	
+	
+	.wrapper
+		display: flex
+		justify-content: space-between
+		align-items: flex-end
+		line-height: 1.25
+		height: var(--module-dimension)
+		padding-bottom: 30px
+	
+		h1
+			color: var(--main-accent-txt-color)
+
+#content
+	padding-top: var(--module-dimension)
+	
+	// --------------------------------------
+	// ITEMS
+	// --------------------------------------		
+	#items
+		min-height: calc(100vh - var(--module-dimension))
+		padding: 0 var(--main-margin) calc(var(--main-margin) - 8px)
+		background: var(--items-background-color)
+		
+	#scrollSpacer
+		height: 1px
+		margin-bottom: 100vh
+		
+
+// --------------------------------------
+// ABOUT
+// --------------------------------------
+#about
+	height: calc(100vh - var(--module-dimension))
+	position: fixed
+	bottom: 0
+	z-index: -1
+	padding: 0 var(--main-margin)
+	border-top: 1px solid var(--subtle-color)
+	display: flex
+	align-items: center
+	width: 100%
+		
+	#overlay
+		background: #000
+		position: absolute
+		left: 0
+		bottom: 0
+		width: 100%
+		height: 69vh
+		z-index: 1
+		pointer-events: none
+	
+	.wrapper
+		display: grid
+		grid-template-columns: repeat(12, 1fr)
+		grid-column-gap: 16px
+		padding: 30px 0
+		position: relative
+		
+		#iDesignWrapper
+			grid-column: 1 / -7
+			margin-bottom: calc(var(--main-margin) / 3)
+			position: relative
+			
+			#mask
+				background: var(--main-background-color-inverted)
+				width: 100%
+				height: 100%
+				-webkit-mask: no-repeat url('assets/iDesign.svg')
+				-webkit-mask-size: contain
+				mask: no-repeat url('assets/iDesign.svg')
+				mask-size: contain
+				
+			#icon
+				width: 26%
+				position: absolute
+				top: -40%
+				right: 11.5%
+				
+				canvas
+					display: block
+					width: 100%
+					height: 100%
+					
+				&:hover
+					cursor: move
+			
+			img
+				width: 100%
+				visibility: hidden
+				
+		a
+			background: #FFA300
+			padding: 0px 5px 1px
+			border-radius: 4px
+			margin: 0 3px
+			color: rgba(0,0,0,0.6)
+			
+			&:hover
+				color: rgba(0,0,0,0.9)
+		
+		p
+			grid-column: 1 / -6
+			margin-bottom: 1em
+			
+		figure
+			position: absolute
+			top: 30px
+			bottom: 30px
+			grid-column: -5 / -1
+	
+			figcaption
+				font-size: 0.7em
+				opacity: 0.5
+				margin-top: 5px
+				letter-spacing: 0.015em
+			
+			img
+				width: 100%
+				height: 100%
+				max-height: 280px
+				border-radius: 16px
+				object-fit: cover
+				
+		#update
+			position: fixed
+			bottom: calc(var(--main-margin) / 2)
+			height: 22px
+			line-height: 22px
+			border: 1px solid var(--main-txt-color)
+			border-radius: 6px
+			display: flex
+			align-items: center
+			padding: 0.5px 5px 0 7px
+			color: var(--main-txt-color)
+			font-size: 10px
+			letter-spacing: 0.25px
+			text-transform: uppercase
+			opacity: 0.5
+
+			span
+				display: inline-block
+				background: var(--main-txt-color)
+				width: 12px
+				height: 60%
+				margin: 10px 0 10px 1px
+				border-radius: 3px
+				opacity: 0.1
+				animation: blink 0.9s cubic-bezier(0.950, 0.050, 0.795, 0.035) infinite both
+				
+
+@keyframes blink
+	0%
+		opacity: 0.75
+	50% 
+		opacity: 0
+	100% 
+		opacity: 0.75 
+
+
+@media (max-width: 1024px)
+	#iDesignWrapper
+		grid-column: 1 / -6 !important
+
+@media (max-width: 860px)
+	#about
+		font-size: 0.85em
+		line-height: 1.55
+		
+@media (max-width: 700px)
+	header
+		.wrapper
+			padding-bottom: 16px
+			
+			ul li
+				line-height: 21px
+			
+	#scrollSpacer, #overlay
+		display: none
+		
+	#items
+		padding-bottom: 32px !important
+	
+	#about
+		position: static
+		height: auto
+		font-size: 0.9em
+		letter-spacing: 0
+		line-height: 1.6
+		
+		#iDesignWrapper
+			width: 75%
+		
+		figure
+			position: static !important
+			margin: 30px 0 var(--main-margin)
+			width: 75%
+		
+		.wrapper
+			padding: 55px 0
+			display: block !important
+			
+		#update
+			margin: 30px 0 0 !important
+			position: static !important
+			display: inline-flex !important
+			
+@media (max-width: 450px)
+	#iDesignWrapper
+		width: 100% !important
+	
+	figure
+		width: 100% !important
+		
+	#update
+		margin: 10px 0 0 !important

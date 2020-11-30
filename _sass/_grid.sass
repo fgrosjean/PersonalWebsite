@@ -1,0 +1,146 @@
+.grid
+	margin: 0 -8px
+
+.grid-item
+	padding: 8px
+	display: flex
+	position: relative
+	
+.item-container
+	background: var(--grid-item-background-color)
+	border-radius: 16px
+	position: absolute
+	top: 8px
+	left: 8px
+	width: calc(100% - 16px)
+	height: calc(100% - 16px)
+	overflow: hidden
+	isolation: isolate
+	transition: 0.2s all
+	
+	&:hover
+		background: var(--grid-item-hover-background-color)
+	
+	span
+		position: absolute
+		left: -500vw
+		
+	.indicador
+		left: 12px
+		top: 12px
+		width: 5px
+		height: 5px
+		background: red
+		border-radius: 7px
+	
+	img
+		width: 100%
+		
+
+.work .indicador
+	background: #F07521
+.projects .indicador
+	background: #53A640
+.writings .indicador
+	background: #0D8ECF
+.talks .indicador
+	background: #863B84
+	
+.grid-sizer, .grid-item
+	width: 16.6%
+
+.h1
+	width: 16.6%
+	
+.h2 
+	width: 33.2%
+
+.v1
+	padding-top: calc(16.6% - 8px)
+	
+.v2
+	padding-top: calc(33.1% - 6px)
+
+.v3
+	padding-top: calc(49.5% - 4px)
+
+
+@media (max-width: 1280px)
+	.grid-sizer, .grid-item
+		width: 20%
+	
+	.h1
+		width: 20%
+		
+	.h2 
+		width: 40%
+	
+	.v1
+		padding-top: calc(20% - 8px)
+		
+	.v2
+		padding-top: calc(39.8% - 6px)
+	
+	.v3
+		padding-top: calc(59.7% - 4px)
+		
+		
+@media (max-width: 1024px)
+	.grid-sizer, .grid-item
+		width: 25%
+	
+	.h1
+		width: 25%
+		
+	.h2 
+		width: 50%
+		
+	.v1
+		padding-top: calc(25% - 8px)
+		
+	.v2
+		padding-top: calc(50% - 6px)
+	
+	.v3
+		padding-top: calc(74.8% - 4px)
+		
+		
+@media (max-width: 700px)
+	.grid-sizer, .grid-item
+		width: 33.33%
+	
+	.h1
+		width: 33.33%
+		
+	.h2 
+		width: 66.66%
+		
+	.v1
+		padding-top: calc(33.33% - 8px)
+		
+	.v2
+		padding-top: calc(66.66% - 6px)
+	
+	.v3
+		padding-top: calc(99.8% - 4px)
+		
+		
+@media (max-width: 500px)
+	.grid-sizer, .grid-item
+		width: 50%
+	
+	.h1
+		width: 50%
+		
+	.h2 
+		width: 100%
+		
+	.v1
+		padding-top: calc(50% - 8px)
+		
+	.v2
+		padding-top: calc(100% - 6px)
+	
+	.v3
+		padding-top: calc(148.9% - 4px)
+		

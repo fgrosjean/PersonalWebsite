@@ -1,0 +1,58 @@
+doctype html
+html(lang='en')
+	head
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		title Fernando Grosjean &mdash; Product Designer
+		link(rel='stylesheet', href='main.css')
+		link(rel="icon", type="image/png", href="/favicon.png")
+		
+	body
+		header
+			.wrapper
+				#name
+					h1 Fernando Grosjean
+					h2 Product Designer
+				
+				ul.noselect: for url, title in about['links']
+					li: a(href= url, target='_blank') #{title}
+				
+		#content.noselect
+			#items
+				.wrapper
+					#segmented-controler
+						#segmented-background
+						#segmented-selector
+						ul: for category in about["categories"]
+							li #{category}
+		
+					ul.grid
+						li.grid-sizer
+						for item in items
+							li.grid-item(class=item.gridHorizonal + " " + item.gridVertical + " " + item.category)
+								a(href=item.link, target="_blank")
+									.item-container 
+										span= item.title
+										span.indicador
+										// img(src="/assets/" + item.image, alt=item.title)
+			#scrollSpacer.noselect
+					
+		#about
+			#overlay
+			.wrapper
+				#iDesignWrapper
+					#mask
+						img(src="./assets/iDesign.svg")
+					#icon
+						canvas(class="zdog-canvas" width="240" height="240")
+					
+				figure
+					img(src="./assets/FernandoGrosjean_profile.png")
+					figcaption Photo: Cristina del Cid
+					
+				p !{about["description"]}
+				
+				span#update Last Update: #{about["last-update"]} <span></span>
+				
+		
+		script: include _scripts/merged.js
+		script: include _scripts/scripts.js
