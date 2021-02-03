@@ -1,0 +1,10 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "#!\/bin\/sh\nnpm run start"
+    }
+  },
+  "identifier" : "A0996211-CEA8-4F8D-A7D2-CD85E3519C2F",
+  "openLogOnRun" : "fail"
+}
